@@ -7,11 +7,12 @@ import { Button } from "primereact/button";
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/primereact.min.css";
 import Loader from "./Loader";
+
 export default function TableComponent() {
   const [items, setItems] = useState<Array<any>>([]);
   const [page, setPage] = useState<number>(1);
   const [selectedProducts, setSelectedProducts] = useState<Array<any>>([]);
-  const [listTrack, setListTrack] = useState<Array<any>>([]);
+  const [listTrack, setListTrack] = useState<Array<number>>([]);
   const [isloaded, setLoaded] = useState<Boolean>(true);
   const [first, setFirst] = useState(0);
   const [rows, setRows] = useState(10);
@@ -46,7 +47,6 @@ export default function TableComponent() {
     return;
   }, [page]);
 
-  
   useEffect(() => {
     if (isUpdated.current) return;
     if (listTrack.length !== 0) sel(items);
@@ -65,14 +65,10 @@ export default function TableComponent() {
     if (number > 0) {
       result.push(number);
     }
-    console.log(result);
     setListTrack(result);
   }
 
-
   function sel(data: any) {
-    console.log("hello");
-
     isUpdated.current = true;
     for (let i = 0; i < listTrack[page - 1]; i++) {
       setSelectedProducts((prev: any) => [...prev, data[i]]);
@@ -127,11 +123,9 @@ export default function TableComponent() {
               </>
             }
           ></Column>
-          <Column field="id" header="Title"></Column>
-
+          <Column field="title" header="Title"></Column>
           <Column field="place_of_origin" header="Place of origin"></Column>
           <Column field="artist_display" header="Display"></Column>
-
           <Column field="inscriptions" header="Inscription"></Column>
           <Column field="date_start" header="Start"></Column>
           <Column field="date_end" header="End"></Column>
@@ -140,7 +134,7 @@ export default function TableComponent() {
       <Paginator
         first={first}
         rows={rows}
-        totalRecords={100}
+        totalRecords={24000}
         onPageChange={onPageChange}
       />
     </>
